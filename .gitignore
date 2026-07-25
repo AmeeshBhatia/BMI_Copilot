@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Secrets — never commit
+.env
+.env.local
+
+# Vercel
+.vercel
+
+# Logs & OS files
+*.log
+.DS_Store
+
+# Build / verification artifacts (local only)
+build_doc.cjs
+*.pdf
+*.tmp
+.~lock.*
+pg-*.jpg
+v-*.jpg
+v2-*.jpg
+prev.*

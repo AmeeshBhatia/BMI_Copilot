@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BMI Copilot — Business Model Intelligence</title>
+<script>
+  // Set theme before first paint to avoid a flash of the wrong mode.
+  (function () {
+    try {
+      var saved = localStorage.getItem("bmi-theme");
+      var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+      document.documentElement.setAttribute("data-theme", saved || (prefersDark ? "dark" : "light"));
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle light / dark mode">🌙</button>
+    <div class="brand">
+      <span class="brand-mark">BMI</span>
+      <span class="brand-name">Business Model Intelligence Copilot</span>
+    </div>
+    <p class="tagline">Enter any company name and instantly understand how the business works.</p>
+  </header>
+
+  <main>
+    <section class="search-panel">
+      <form id="research-form">
+        <input
+          id="company-input"
+          type="text"
+          placeholder="e.g. Customer Bank, Acme Logistics, Shopify..."
+          autocomplete="off"
+          required
+        />
+        <button type="submit" id="submit-btn">Generate Briefing</button>
+      </form>
+      <p id="status-line" class="status-line"></p>
+    </section>
+
+    <section id="report-root" class="report-root" hidden></section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
