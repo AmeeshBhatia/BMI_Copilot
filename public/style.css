@@ -252,7 +252,11 @@ ul.plain li:last-child { margin-bottom: 0; }
 
 /* Print / Save-as-PDF: show only the report, cleanly paginated */
 @media print {
-  .topbar, .search-panel, .theme-toggle, .toc, .pdf-btn, .no-print { display: none !important; }
+  .topbar, .search-panel, .theme-toggle, .pdf-btn, .no-print { display: none !important; }
+  /* Keep the jump-to-section list in the PDF as a clickable contents page */
+  .toc { break-after: page; page-break-after: always; border: none; padding-top: 0; }
+  .toc h2 { color: #000; }
+  .toc-links a { color: #000; background: transparent; border: 1px solid #999; }
   main { max-width: none; padding: 0; }
   body { background: #fff; color: #000; }
   .report-root { gap: 0; }

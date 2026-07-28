@@ -364,7 +364,7 @@ function renderReport(r) {
 
   // Jump-to-section navigation, shown right after the executive summary.
   const toc = numbered.length
-    ? `<div class="card toc no-print">
+    ? `<div class="card toc">
         <h2>Jump to a section</h2>
         <div class="toc-links">${numbered
           .map((s) => `<a href="#${s.id}">${s.num && s.num !== "§" ? s.num + ". " : ""}${esc(s.title)}</a>`)
