@@ -322,19 +322,48 @@ function renderReport(r) {
       (tech.recommendedTechnologies || []).map((x) => [x.technology, x.benefit])) +
     field("What Competitors Are Leveraging", tech.competitorTechnology));
 
-  add("17", "AI Opportunities", list(r.aiOpportunities));
-  add("18", "Analytics Opportunities", list(r.analyticsOpportunities));
+  // 17. Technology Maturity Assessment  (NEW)
+  const tm = r.technologyMaturity || {};
+  const maturityRows = (tm.dimensions || []).filter((d) => d && !isBlank(d.area)).map((d) => {
+    const s = Math.max(0, Math.min(5, Math.round(Number(d.score) || 0)));
+    const bar = Array.from({ length: 5 }, (_, i) => `<span class="${i < s ? "on" : ""}"></span>`).join("");
+    return `<div class="maturity-row">
+        <div class="m-area">${esc(d.area)}${d.note && !isBlank(d.note) ? `<div class="m-note">${esc(d.note)}</div>` : ""}</div>
+        <div class="score-bar">${bar}</div>
+        <div class="m-score">${s}/5</div>
+      </div>`;
+  }).join("");
+  add("17", "Technology Maturity Assessment",
+    (maturityRows ? `<div class="maturity">${maturityRows}</div>` : "") +
+    (isBlank(tm.overallScore) ? "" : `<div class="maturity-overall">Overall Digital Maturity: ${esc(tm.overallScore)}</div>`) +
+    (isBlank(tm.summary) ? "" : `<div class="field" style="margin-top:8px;"><div class="value">${esc(tm.summary)}</div></div>`));
 
-  add("19", "Salesforce Opportunities",
+  add("18", "AI Opportunities", list(r.aiOpportunities));
+  add("19", "Analytics Opportunities", list(r.analyticsOpportunities));
+
+  add("20", "Salesforce Opportunities",
     table(["Product", "Why it fits"],
       (r.salesforceOpportunities || []).map((x) => [x.product, x.reason])));
 
-  add("20", "Business Use Cases", list(r.businessUseCases));
-  add("21", "Business Outcomes", list(r.businessOutcomes));
+  add("21", "Business Use Cases", list(r.businessUseCases));
+  add("22", "Business Outcomes", list(r.businessOutcomes));
 
-  add("22", "Recent News & Trends",
+  add("23", "Recent News & Trends",
     table(["Timeframe", "Headline", "Summary"],
       (r.recentNews || []).map((x) => [x.timeframe, x.headline, x.summary])));
+
+  // 24. Executive Recommendations / Next Best Actions  (NEW) — closes the report
+  const recRows = (r.executiveRecommendations || []).filter((x) => x && !isBlank(x.recommendation)).map((x) => {
+    const p = String(x.priority || "").toLowerCase();
+    const cls = p === "high" ? "high" : p === "low" ? "low" : "medium";
+    return [`<span class="prio ${cls}">${esc(x.priority || "Medium")}</span>`, esc(x.recommendation), esc(x.expectedImpact)];
+  });
+  add("24", "Executive Recommendations / Next Best Actions",
+    recRows.length
+      ? `<table><thead><tr><th>Priority</th><th>Recommendation</th><th>Expected Business Impact</th></tr></thead><tbody>${
+          recRows.map((r) => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join("")
+        }</tbody></table>`
+      : "");
 
   // Sources (special card, also in the nav)
   if (r.sources && r.sources.length) {

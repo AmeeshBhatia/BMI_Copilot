@@ -246,6 +246,23 @@ ul.plain li:last-child { margin-bottom: 0; }
   #research-form { flex-direction: column; }
 }
 
+/* Technology Maturity scorecard */
+.maturity-row { display: flex; align-items: center; gap: 14px; padding: 9px 0; border-bottom: 1px solid var(--line); }
+.maturity-row:last-child { border-bottom: none; }
+.maturity-row .m-area { flex: 1; font-size: 14.5px; }
+.maturity-row .m-note { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+.score-bar { display: inline-flex; gap: 3px; }
+.score-bar span { width: 18px; height: 8px; border-radius: 2px; background: var(--line); }
+.score-bar span.on { background: var(--accent); }
+.m-score { font-size: 13px; color: var(--ink-soft); min-width: 30px; text-align: right; }
+.maturity-overall { margin-top: 14px; font-size: 15px; font-weight: 700; color: var(--accent); }
+
+/* Priority badges (Executive Recommendations) */
+.prio { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 999px; }
+.prio.high { background: rgba(194, 59, 59, 0.15); color: var(--bad); }
+.prio.medium { background: rgba(185, 117, 47, 0.15); color: var(--warn); }
+.prio.low { background: var(--accent-soft); color: var(--accent); }
+
 .sources-list { font-size: 12.5px; color: var(--ink-soft); }
 .sources-list a { color: var(--accent); text-decoration: none; }
 .sources-list a:hover { text-decoration: underline; }
